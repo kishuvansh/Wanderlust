@@ -1,0 +1,21 @@
+Model : listing ->apartment , flat 
+title ->string 
+description ->string 
+image ->URL String 
+price ->Number
+location 
+country 
+data.js -> has data in format specified by listing.js in models 
+data is loaded using index.js to database .
+show : listing /id to show listings 
+listings: to show list of listings 
+Create :to add new listing --> /listing/new 
+post request using a form  
+
+Update:Edit&update 
+
+    get : lisiting/id/Edit --> edit form request
+    Put: listing/id 
+
+
+Ejs mate for design 
