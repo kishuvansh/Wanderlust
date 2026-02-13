@@ -5,7 +5,8 @@ const mongoose=require('mongoose');
 const path=require('path');
 const methodeOverride=require('method-override');
 const ejsMate=require('ejs-mate'); 
-const {listingSchema}=require("./schema.js");
+const {listingSchema,reviewSchema}=require("./schema.js");
+const Review=require("./models/review.js");
 const wrapAsync = require('./utils/wrapAsync.js');
 const ExpressError=require("./utils/ExpressError.js");  
 
@@ -44,6 +45,17 @@ const validateListing=(req,res,next)=>{
     next();
   }
 }
+const validateReview=(req,res,next)=>{
+    let {error}=reviewSchema.validate(req.body);
+      if(error){
+        let errMsg=error.details.map((el)=>el.message).join(",");
+    throw new ExpressError(400,errMsg);
+  }
+  else{
+    next();
+  }
+}
+
 // const validateListing = (req, res, next) => {
 //     console.log("--- Validation Check ---");
 //     console.log("Raw req.body:", req.body); // If this is {}, the issue is Hoppscotch or Body-Parser
@@ -100,7 +112,7 @@ app.get('/listings',wrapAsync(async(req,res)=>{
 // show route 
 app.get("/listings/:id",async(req,res)=>{
     const {id}=req.params;
-   const listing=await Listing.findById(id);
+   const listing=await Listing.findById(id).populate("reviews");
    res.render("listings/show",{listing});
 })
 app.get("/listings/:id/edit",wrapAsync(async(req,res)=>{
@@ -129,7 +141,25 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
 //   next(new ExpressError(404, "404! page not found"));
 // });
 
+// reviews-post route to add new reviews related to listings 
+app.post("/listings/:id/reviews",validateReview,wrapAsync(async(req,res)=>{
+    let listing=await Listing.findById(req.params.id);
+    let newreview =new Review(req.body.review);
+    listing.reviews.push(newreview);
+    await newreview.save();
+    await listing.save();
+    res.redirect(`/listings/${listing._id}`);
+}));
+// delete Review route 
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+    let{id,reviewId}=req.params;
+    // $pull work as pull the reviewId from reviews array in listing and then delete the review document from review collection using reviewId 
+    await Listing.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    
 
+   res.redirect(`/listings/${id}`);
+}))
 app.use((err,req,res,next)=>{
     let {statusCode=500,message="something went wrong"}=err;
     res.status(statusCode).render("error.ejs",{err});

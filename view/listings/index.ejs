@@ -6,7 +6,7 @@
      <%for(let listing of allListings){ %>
 
       <a href="/listings/<%=listing._id %>" class="listing-link">
-   <div class="card col " style="width: 18rem;">
+   <div class="card col listing-card " style="width: 18rem;">
   <% const imgUrl = listing && listing.image && (listing.image.url || listing.image); %>
     <img src="<%= imgUrl || '/images/default.jpg' %>" 
         class="card-img-top " 
@@ -16,7 +16,7 @@
     <div class="card-body">
       <h5 class="card-title"><b><%= listing.title %></b></h5>
         <br>
-          &#8377    <%=listing.price.toLocaleString("en-IN") %> /neight
+          &#8377    <%=listing.price.toLocaleString("en-IN") %> /night
                             
         </p>
      
