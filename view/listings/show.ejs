@@ -3,13 +3,16 @@
     <body>
         <div class="card-body text-start">
             <h5 class="card-title"><%= listing.title %></h5>
-        <div class="card col-12 col-md-8 listing-card ">
+        <div class="card col-12 col-md-10 listing-card ">
           <% const imgUrl = listing && listing.image && (listing.image.url || listing.image); %>
           <div class="d-flex justify-content-center my-3">
             <img src="<%= imgUrl || '/images/default.jpg' %>" class="card-img-top mx-auto"
                  style="height:20rem; width:auto; max-width:100%; object-fit:cover;" alt="listing image">
           </div>
-        
+            <div class="card-body">
+              <p class="card-text">
+                <i><%= listing.owner.username %></i>
+              </p>
          
         
             <ul class="list-unstyled ps-0">
@@ -18,10 +21,22 @@
               <li><%= listing.location %></li>
               <li><%= listing.country %></li>
             </ul>
-        
+            <% if(currentUser && currentUser._id.equals(listing.owner._id)){ %>
             <!-- place Edit, Delete and Back in a single responsive row -->
-            
-<hr>
+             <div class="row mt-3 align-items-center">
+              <div class="col-md-6 d-flex gap-2">
+                <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary">Edit</a>
+                <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" class="m-0">
+                  <button class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+              <%} %>
+              <div class="col-md-6 text-md-end m-auto">
+                <a href="/listings" class="btn btn-dark">Back</a>
+              </div>
+            </div>
+<br>
+            <% if(currentUser){ %>
             <div class="col-8 offset-3">
                 <h4>Leave a Review</h4>
                 <form action="/listings/<%=listing._id%>/reviews" method="post" novalidate class="needs-validation">
@@ -37,35 +52,29 @@
                     <button class="btn btn-outline-dark">submit</button>
                 </form>
                 </div>
-                <hr>
+                <%} %>
+      <br>
                 <p><b>All Reviews</b></p>
                 <div class="row ">
                   <% for(let review of listing.reviews){ %>
                      <div class="card col-5 ms-2 mb-2">
                       <div class="card-body">
-                      <h5 class="card-title">User name</h5>
+                      <h5 class="card-title"><%= review.author.username%></h5>
                       <p class="card-text"> <%=review.comment%> </p>
-                      <p class="card-text"><%=review.rating%> &#9734</p>  
+                      <p class="card-text"><%=review.rating%> &#9734</p>
+                      <p class="card-text"><%=review.DateCreated.toLocaleDateString() %></p>
                       </div>
+                                  <% if(currentUser && review.author && currentUser._id.equals(review.author._id)){ %>
                       <FORM class="mb-3" method="post" action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">
                         <button class="btn btn-sm btn-danger">Delete</button>
                       </FORM>
+                      <% } %>
                       </div>
                 <% } %>
                 </div>
                 </div>
 
             </div>
-            <div class="row mt-3 align-items-center">
-              <div class="col-md-6 d-flex gap-2">
-                <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary">Edit</a>
-                <form action="/listings/<%= listing._id %>?_method=DELETE" method="post" class="m-0">
-                  <button class="btn btn-danger">Delete</button>
-                </form>
-              </div>
-              <div class="col-md-6 text-md-end">
-                <a href="/listings" class="btn btn-dark">Back</a>
-              </div>
-            </div>
+           
           </div>
         </div>

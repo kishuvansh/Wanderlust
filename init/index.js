@@ -10,7 +10,9 @@ async function initDB() {
       throw new Error("initData.data is missing or not an array");
     }
     console.log("seed count:", initData.data.length);
-
+     initData.data= initData.data.map((obj)=>({
+    ...obj,owner:"69bd18d8b14cc1535f721245"
+    }));
     // normalize each doc to match schema: image should be an object { filename, url } and title must exist
     const normalized = initData.data
       .filter(d => {
@@ -20,6 +22,7 @@ async function initDB() {
         }
         return true;
       })
+      
       .map(d => {
         const out = { ...d };
         // handle image being a string url or an object
