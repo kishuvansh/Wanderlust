@@ -1,6 +1,6 @@
-# STAYHUB 🌍
+# TravelListing 🌍
 
-StayHub is a full-stack web application designed to help users discover, create, and share travel listings from around the world. Inspired by popular travel platforms like Airbnb, Wanderlust offers a seamless experience for browsing holiday destinations, reading community reviews, and managing your own travel spots.
+TravelListing is a full-stack web application designed to help users discover, create, and share travel listings from around the world. Inspired by popular travel platforms like Airbnb, Wanderlust offers a seamless experience for browsing holiday destinations, reading community reviews, and managing your own travel spots.
 
 ---
 
