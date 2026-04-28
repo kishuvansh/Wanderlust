@@ -8,8 +8,8 @@ module.exports = {
         res.render("listings/new");
     },
     createNew: async (req, res, next) => {
-        let url = req.file.path;
-        let filename = req.file.filename;
+        let url = req.file.path || req.file.url || req.file.secure_url;
+        let filename = req.file.filename || req.file.public_id;
         const newlisting = new Listing(req.body.listing);
         newlisting.owner = req.user._id;
         newlisting.image = { url, filename };
@@ -33,18 +33,18 @@ module.exports = {
     update: async (req, res) => {
         let { id } = req.params;
         let listing = await Listing.findByIdAndUpdate(id, { ...req.body.listing });
-        if(typeof(req.file)!="undefined"){
-        let url = req.file.path;
-        let filename = req.file.filename;
-        listing.image = { url, filename };
-        await listing.save();
-        }
-        
-        req.flash("success", "Listing updated successfully!");
-        if (!Listing) {
+        if (!listing) {
             req.flash("error", "Listing not found");
             return res.redirect("/listings");
         }
+        if (typeof req.file !== "undefined") {
+            let url = req.file.path || req.file.url || req.file.secure_url;
+            let filename = req.file.filename || req.file.public_id;
+            listing.image = { url, filename };
+            await listing.save();
+        }
+        
+        req.flash("success", "Listing updated successfully!");
         res.redirect(`/listings/${id}`);
     },
     editform: async (req, res) => {

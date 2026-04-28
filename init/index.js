@@ -1,17 +1,31 @@
 const mongoose = require("mongoose");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
+const User = require("../models/user.js");
+require('dotenv').config();
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = process.env.ATLAS_URL || "mongodb://127.0.0.1:27017/wanderlust";
 
 async function initDB() {
   try {
     if (!initData || !Array.isArray(initData.data)) {
       throw new Error("initData.data is missing or not an array");
     }
+    
+    // Dynamically assign owner to an existing user in the database
+    let defaultOwner = "69bd18d8b14cc1535f721245";
+    const existingUser = await User.findOne({});
+    if (existingUser) {
+      defaultOwner = existingUser._id;
+      console.log(`Using existing database user '${existingUser.username}' (${defaultOwner}) as owner.`);
+    } else {
+      console.log(`No users found. Seeding with fallback owner ID ${defaultOwner}`);
+    }
+
     console.log("seed count:", initData.data.length);
-     initData.data= initData.data.map((obj)=>({
-    ...obj,owner:"69bd18d8b14cc1535f721245"
+    initData.data = initData.data.map((obj) => ({
+      ...obj,
+      owner: defaultOwner
     }));
     // normalize each doc to match schema: image should be an object { filename, url } and title must exist
     const normalized = initData.data

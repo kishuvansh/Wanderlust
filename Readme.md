@@ -1,36 +1,42 @@
-# TravelListing 🌍
+# TRAVEL Listings 🌍
 
-TravelListing is a full-stack web application designed to help users discover, create, and share travel listings from around the world. Inspired by popular travel platforms like Airbnb, Wanderlust offers a seamless experience for browsing holiday destinations, reading community reviews, and managing your own travel spots.
+TRAVEL Listings is a premium full-stack web application designed for modern travelers to discover, create, and share beautiful destinations across the globe. Inspired by leading travel platforms, it offers a high-end experience for browsing holiday spots, reading community feedback, and managing your own travel portfolio with integrated geocoding and interactive maps.
 
 ---
 
 ## ✨ Features
 
-- **Explore Listings:** Browse through a wide variety of holiday spots with high-quality images and detailed descriptions.
-- **Manage Listings (CRUD):** Logged-in users can easily create, view, edit, and delete their own travel listings.
-- **Review System:** Share your travel experiences! Users can add ratings and comments to any listing, as well as delete their own reviews.
-- **User Authentication:** Secure signup, login, and logout functionality powered by Passport.js.
-- **Authorization:** Smart permissions ensure that only owners can edit or delete their listings and reviews.
-- **Responsive Design:** Clean and modern user interface that works beautifully across different devices.
-- **Robust Validation:** Form data is validated using Joi schemas to ensure data integrity.
+- **📍 Interactive Maps:** View the exact location of every listing with integrated MapTiler and MapLibre GL maps.
+- **🗺️ Smart Geocoding:** Automatically converts text locations (e.g., "Paris, France") into precise map coordinates.
+- **📸 Cloud Image Management:** High-performance image hosting and optimization powered by **Cloudinary**.
+- **🏨 Explore Destinations:** Discover a curated collection of holiday spots with vibrant imagery and detailed descriptions.
+- **🛠️ Full CRUD Capability:** Authenticated users can seamlessly Create, Read, Update, and Delete their own listings.
+- **⭐ Review & Rating System:** Integrated star-rating system (Starability) for users to share and manage their travel experiences.
+- **🔒 Secure Authentication:** Robust signup and login flows powered by **Passport.js**.
+- **🛡️ Smart Authorization:** Role-based permissions ensuring only owners can modify their listings and reviews.
+- **📱 Premium Responsive UI:** A stunning, modern interface built with Bootstrap that feels native on mobile, tablet, and desktop.
+- **✅ Data Integrity:** strict server-side validation using **Joi** schemas.
 
 ---
 
 ## 🛠️ Tech Stack
 
 **Frontend:**
-- HTML, CSS (Bootstrap for styling)
-- EJS (Embedded JavaScript) for dynamic templating
-- `ejs-mate` for reusable layouts
+- HTML5 & Vanilla CSS
+- **Bootstrap 5** for responsive layout
+- **EJS (Embedded JavaScript)** for dynamic server-side rendering
+- **MapLibre GL** for interactive map rendering
+- **Starability.css** for accessible star ratings
 
 **Backend:**
-- Node.js & Express.js
-- Mongoose for MongoDB integration
-- Passport.js for local authentication
-- `connect-flash` for alert messages
+- **Node.js & Express.js**
+- **Mongoose** for MongoDB object modeling
+- **Passport.js** (Local Strategy) for authentication
+- **Cloudinary & Multer** for cloud-based file uploads
+- **Dotenv** for secure environment variable management
 
 **Database:**
-- MongoDB (Local or Atlas)
+- **MongoDB** (NoSQL database)
 
 ---
 
@@ -39,11 +45,11 @@ TravelListing is a full-stack web application designed to help users discover, c
 Follow these steps to set up the project on your local machine:
 
 ### 1. Prerequisites
-Ensure you have **Node.js** and **MongoDB** installed.
+Ensure you have **Node.js** and **MongoDB** installed on your system.
 
 ### 2. Clone the Repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/kishuvansh/Wanderlust.git
 cd major
 ```
 
@@ -52,35 +58,42 @@ cd major
 npm install
 ```
 
-### 4. Setup Database
-Initialize the database with sample data:
+### 4. Environment Variables
+Create a `.env` file in the root directory and add your credentials:
+```env
+CLOUD_NAME=your_cloudinary_name
+CLOUD_API_KEY=your_cloudinary_api_key
+CLOUD_API_SECRET=your_cloudinary_secret
+MAPTILER_KEY=your_maptiler_api_key
+```
+
+### 5. Setup Database
+Initialize the database with seed data:
 ```bash
 node init/index.js
 ```
 
-### 5. Start the Server
-Run the application using the following npm commands:
-- For development (with hot reload):
+### 6. Start the Server
 ```bash
-npm run dev
-```
-- For production:
-```bash
+# For development with hot-reload
+npx nodemon app.js
+
+# For production
 npm start
 ```
-The server will start at `http://localhost:8080`.
+The application will be live at `http://localhost:8080`.
 
 ---
 
 ## 📂 Project Structure
 
-- `/controllers`: Contains the logic for the application routes.
+- `/controllers`: Application logic and request handling.
 - `/models`: Mongoose schemas for Listings, Reviews, and Users.
-- `/route`: Defines the API endpoints and connects them to controllers.
-- `/view`: EJS templates for rendering pages.
-- `/public`: Static assets including CSS, client-side JS, and images.
-- `/utils`: Error handling and utility functions.
-- `/init`: Database initialization scripts and seed data.
+- `/route`: Express routing for different features.
+- `/view`: EJS templates for page structure.
+- `/public`: Static assets (Custom CSS, Client-side JS, Images).
+- `/utils`: Error handling classes and utility functions.
+- `/init`: Database seeding logic.
 
 ---
 

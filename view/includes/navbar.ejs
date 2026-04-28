@@ -11,14 +11,16 @@
     
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active"  href="/">Home</a>
-        <a class="nav-link" href="/listings">All Listings</a>
-        <a class="nav-link" href="/listings/new">Add New Listings</a>
+
+       <a class="nav-link" href="/listings">Explore</a>
+
         <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
       </div>
+
       <div class="navbar-nav ms-auto">
+         <a class="nav-link" href="/listings/new">Airbnb your home</a>
         <% if(currentUser){ %>
-          <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-link" href="/logout" style="color: red;">Logout</a>
         <% } else { %>
           <a class="nav-link" href="/login">Login</a>
           <a class="nav-link" href="/signup">Sign Up</a>
