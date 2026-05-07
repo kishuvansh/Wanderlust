@@ -111,9 +111,7 @@ body {
 .card-text {
     text-decoration: none !important;
     font-weight: 600;
-
 }
-
 #map {
     height: 400px;
     width: 100%;

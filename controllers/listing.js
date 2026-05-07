@@ -54,6 +54,8 @@ module.exports = {
             req.flash("error", "Listing not found");
             return res.redirect("/listings");
         }
+       let orignalImage= listing.image.url;
+       orignalImage.replace("upload/","upload/w_250");
         res.render('listings/edit.ejs', { listing });
     },
     deleteListing: async (req, res) => {

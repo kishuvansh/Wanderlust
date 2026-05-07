@@ -1,4 +1,24 @@
 <% layout('layouts/boilerplate.ejs') -%>
+  <script>
+    const mapToken = "<%= mapTilerKey %>";
+  </script>
+  <!-- <body> -->
+  <div class="card-body text-start">
+    <h5 class="card-title">
+      <%= listing.title %>
+    </h5>
+    <div class="card col-12 col-md-10 listing-card ">
+      <% const imgUrl=listing && listing.image && (listing.image.url || listing.image); %>
+        <div class="d-flex justify-content-center my-3">
+          <img src="<%= imgUrl || '/images/default.jpg' %>" class="card-img-top mx-auto"
+            style="height:20rem; width:auto; max-width:100%; object-fit:cover;" alt="listing image">
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+            <i>
+              <%= listing.owner.username %>
+            </i>
+          </p>
 
   <script>
     window.mapToken = "<%= process.env.MAPTILER_KEY %>";
