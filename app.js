@@ -50,12 +50,6 @@ const sessionOptions = {
     }
 }
 
-
-// app.get('/', (req, res) => {
-//     res.send("Welcome to Wanderlust");
-// })
-
-
 main()
     .then(() => {
         console.log('connected to Db');
